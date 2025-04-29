@@ -99,13 +99,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>ao.it.mimo.api</groupId>
-			<artifactId>sms</artifactId>
-			<version>1.0.0</version>
-			<scope>system</scope>
-			<systemPath>${pom.basedir}/libs/apimimo.jar</systemPath>
-		</dependency>
+		 
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
