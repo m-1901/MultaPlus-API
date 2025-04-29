@@ -1,6 +1,5 @@
 package ao.multaplus.sms.service;
 
-import ao.it.mimo.api.exception.MimoException;
 import org.springframework.web.client.RestClientException;
 
 public interface SMSService {
