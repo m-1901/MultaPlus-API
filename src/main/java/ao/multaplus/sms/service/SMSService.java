@@ -4,7 +4,7 @@ import ao.it.mimo.api.exception.MimoException;
 import org.springframework.web.client.RestClientException;
 
 public interface SMSService {
- 
+
     /**
      * Send SMS to a phone number using Mimo Rest API
      *
