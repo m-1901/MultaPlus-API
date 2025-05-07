@@ -49,7 +49,7 @@ public class Auth extends AbstractModel implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(false) {
+        if(role.getRole().equalsIgnoreCase("admin")) {
             return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
         }
         else {
