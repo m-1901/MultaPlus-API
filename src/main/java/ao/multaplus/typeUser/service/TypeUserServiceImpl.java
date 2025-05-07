@@ -3,6 +3,7 @@ package ao.multaplus.typeUser.service;
 import ao.multaplus.state.dtos.StateSenderDto;
 import ao.multaplus.state.entity.Status;
 import ao.multaplus.state.repository.StatusRepository;
+import ao.multaplus.state.service.StatusService;
 import ao.multaplus.typeUser.dtos.TypeUserUpdateDto;
 import ao.multaplus.typeUser.dtos.TypeUsersDto;
 import ao.multaplus.typeUser.response.TypeUsersResponse;
@@ -19,11 +20,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TypeUserServiceImpl implements TypeUserService {
-
-    @Autowired
-    private TypeUserRepository repository;
-    @Autowired
+    private final TypeUserRepository repository;
     private final StatusRepository statusRepository;
+    private final StatusService statusService;
 
     @Override
     public TypeUsersResponse create(TypeUsersDto request) {
@@ -88,13 +87,14 @@ public class TypeUserServiceImpl implements TypeUserService {
                 typeUsers.getId(),
                 typeUsers.getType(),
                 typeUsers.getDescription(),
-                new StateSenderDto(typeUsers.getState().getId())
+                new StateSenderDto(typeUsers.getState().getId(), typeUsers.getState().getState())
         );
     }
 
     @Override
     @PostConstruct
     public void migration() {
+        Status status = statusService.getStatus(1L);
         if (repository.count() == 0) {
             String[] array = {
                     "admin",
@@ -108,10 +108,10 @@ public class TypeUserServiceImpl implements TypeUserService {
                     "Treasurer",
                     "Technical support"
             };
-
-            for (int i = 0; i < array.length; i++) {
+            for (String string : array) {
                 TypeUsers typeUser = new TypeUsers();
-                typeUser.setType(array[i]);
+                typeUser.setType(string);
+                typeUser.setState(status);
                 repository.save(typeUser);
             }
         }

@@ -6,12 +6,17 @@ import ao.multaplus.auth.dtos.VerifyLoginDto;
 import ao.multaplus.auth.entity.Auth;
 import ao.multaplus.auth.repository.AuthRepository;
 import ao.multaplus.auth.response.LoginResponse;
+import ao.multaplus.exception.model.ResourceInConflictException;
 import ao.multaplus.mail.MailServiceImpl;
 import ao.multaplus.sms.service.SMSServiceImpl;
 import ao.multaplus.redis.RedisServiceImpl;
 import ao.multaplus.role.service.RoleService;
 import ao.multaplus.security.TokenService;
+import ao.multaplus.state.entity.Status;
+import ao.multaplus.state.service.StatusService;
 import ao.multaplus.utils.Utils;
+import jakarta.annotation.PostConstruct;
+import jdk.dynalink.linker.LinkerServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +29,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService, UserDetailsService {
@@ -31,7 +39,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
     private final AuthRepository authRepository;
 
     private final RoleService roleService;
-    private  final SMSServiceImpl SMSService;
+    private final SMSServiceImpl SMSService;
     private final MailServiceImpl mailService;
     private final RedisServiceImpl redisService;
     private final TokenService tokenService;
@@ -43,6 +51,8 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
 
     @Value("${api.security.otp.expiration}")
     private long otpExpiration;
+    @Autowired
+    private StatusService statusService;
 
     @Override
     public UserDetails loadUserByUsername(
@@ -52,7 +62,8 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
 
     public LoginResponse login(LoginDto loginDto) {
 
-        var usernamePassowrd = new UsernamePasswordAuthenticationToken(loginDto.email(), loginDto.password());
+        var usernamePassowrd = new UsernamePasswordAuthenticationToken(loginDto.email(),
+                loginDto.password());
         var auth = authenticationManager.authenticate(usernamePassowrd);
 
         return new LoginResponse(tokenService.generateToken((Auth) auth.getPrincipal()));
@@ -61,10 +72,11 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
     @Override
     public Auth register(RegisterDto registerDto) {
         if (authRepository.findByEmail(registerDto.email()) != null) {
-            return null;
+            throw new ResourceInConflictException("email is already used");
         }
 
-        String encryptedPassword = new BCryptPasswordEncoder().encode(registerDto.password());
+        String encryptedPassword = new BCryptPasswordEncoder().encode(
+                registerDto.password());
 
         Auth auth = new Auth();
         auth.setEmail(registerDto.email());
@@ -75,9 +87,10 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
 
     @Override
     public void login(LoginDto loginDto, boolean sendOtpByEmail) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(loginDto.email(), loginDto.password());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(loginDto.email(),
+                loginDto.password());
         var auth = authenticationManager.authenticate(usernamePassword);
-        sendOTP((Auth) auth.getPrincipal(),sendOtpByEmail);
+        sendOTP((Auth) auth.getPrincipal(), sendOtpByEmail);
     }
 
     @Override
@@ -95,7 +108,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         redisService.save(auth.getId().toString(),
                 passwordEncoder.encode(otp.toString()),
                 otpExpiration);
-        if(sendOtpByEmail)
+        if (sendOtpByEmail)
             mailService.sendOTP(auth.getEmail(), otp, otpExpiration);
         else
             SMSService.sendSMSWithMimoRestAip(auth.getUsername(), otp.toString());
@@ -108,4 +121,22 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         }
         redisService.delete(email);
     }
+
+    @PostConstruct
+   void  add() {
+       Status status = statusService.getStatus(1L);
+       List<Auth> users = new ArrayList<>();
+
+       for (int i = 1; i <= 15; i++) {
+           Auth user = Auth.builder()
+                   .email("user" + i + "@g.com")
+                   .telephone("123456789" + i)
+                   .password(passwordEncoder.encode(""+i))
+                   .state(status)
+                   .build();
+           users.add(user);
+       }
+       authRepository.saveAll(users);
+
+   }
 }

@@ -32,7 +32,7 @@ public class TypeVehicleServiceImpl implements TypeVehiclesService {
             throw new RuntimeException("Category  type already exists");
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Error to save Type Vehicles");
+            throw new RuntimeException("Error to saveAction Type Vehicles");
         }
     }
 

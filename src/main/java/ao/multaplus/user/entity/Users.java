@@ -3,7 +3,7 @@ package ao.multaplus.user.entity;
 import ao.multaplus.auth.entity.Auth;
 import ao.multaplus.gender.entity.Genders;
 import ao.multaplus.model.AbstractModel;
-import ao.multaplus.province.entity.Provinces;
+import ao.multaplus.province.entity.Province;
 import ao.multaplus.state.entity.Status;
 import ao.multaplus.typeUser.entity.TypeUsers;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -49,7 +49,7 @@ public class Users extends AbstractModel {
     @ManyToOne
     @JoinColumn(name = "province_id")
     @JsonIgnoreProperties("users")
-    private Provinces province;
+    private Province province;
 
     @ManyToOne
     @JoinColumn(name = "type_user_id")

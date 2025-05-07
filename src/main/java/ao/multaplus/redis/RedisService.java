@@ -6,8 +6,8 @@ public interface RedisService {
     /**
      * Save the key-value pair to the Redis database with the given expiration time.
      *
-     * @param key            the key to save
-     * @param value          the value to save
+     * @param key            the key to saveAction
+     * @param value          the value to saveAction
      * @param expirationTime the expiration time of the key-value pair
      */
     void save(String key, String value, Long expirationTime);

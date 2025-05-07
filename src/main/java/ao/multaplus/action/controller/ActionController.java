@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/action")
+@RequestMapping("/actions")
 @RequiredArgsConstructor
 public class ActionController {
 
@@ -18,36 +18,36 @@ public class ActionController {
 
     @Operation(description = "List an action", tags = "action")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Success"))
-    @GetMapping("/list/{id}")
-    public ResponseEntity<?> getone(@PathVariable long id){
-        return actionService.getone(id);
+    @GetMapping("/{actionIdentifier}")
+    public ResponseEntity<?> getAction(@PathVariable Long actionIdentifier){
+        return actionService.getActions(actionIdentifier);
     }
 
-    @Operation(description = "List All actions", tags = "action")
+    @Operation(description = "All actions", tags = "action")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Success"))
-    @GetMapping("/list")
-    public ResponseEntity<?> getall(){
-        return actionService.getall();
+    @GetMapping
+    public ResponseEntity<?> getActions(){
+        return actionService.getActions();
     }
 
     @Operation(description = "Save an action", tags = "action")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Success"))
-    @PostMapping("/save")
+    @PostMapping
     public ResponseEntity<?> save(@RequestBody ActionRequestDto save){
-        return actionService.save(save);
+        return actionService.saveAction(save);
     }
 
     @Operation(description = "Update an action", tags = "action")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Success"))
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable long id,@RequestBody ActionRequestDto update){
-        return actionService.update(id,update);
+    @PutMapping(" /{actionIdentifier}")
+    public ResponseEntity<?> update(@PathVariable long actionIdentifier,@RequestBody ActionRequestDto update){
+        return actionService.updateAction(actionIdentifier,update);
     }
 
     @Operation(description = "Delete an action", tags = "action")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Success"))
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id){
-        return actionService.delete(id);
+    @DeleteMapping("/{actionIdentifier}")
+    public ResponseEntity<?> delete(@PathVariable Long  actionIdentifier){
+        return actionService.deleteAction(actionIdentifier);
     }
 }

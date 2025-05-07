@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/province")
+@RequestMapping("/provinces")
 @SuppressWarnings("unused")
 @RequiredArgsConstructor
 @Tag(name = "Provinces", description = "Manege Provinces")

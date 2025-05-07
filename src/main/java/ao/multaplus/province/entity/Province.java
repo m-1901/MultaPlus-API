@@ -14,7 +14,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Provinces extends AbstractModel {
+public class Province extends AbstractModel {
 
     @Column(nullable = false)
     @NotBlank(message = "Enter a Province")

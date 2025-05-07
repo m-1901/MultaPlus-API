@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/gender")
+@RequestMapping("/gender")
 public class GenderController {
     private final GenderServiceImpl genderService;
     public GenderController(GenderServiceImpl genderService) {
@@ -22,35 +22,35 @@ public class GenderController {
 
     @Operation(description = "List All gender", tags = "gender")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Success"))
-    @GetMapping("/list")
+    @GetMapping
     public ResponseEntity<?> list(GenderDtoList genderDtoList){
         return genderService.list();
     }
 
     @Operation(description = "Find a gender", tags = "gender")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Success"))
-    @GetMapping("/list/{id}")
+    @GetMapping("/{id}")
     public Optional<Genders> buscar(@PathVariable long id){
         return genderService.findone(id);
     }
 
     @Operation(description = "Save a gender", tags = "gender")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Success"))
-    @PostMapping("/save")
+    @PostMapping
     public ResponseEntity<?> save(@RequestBody GenderDto genderDto){
         return genderService.save(genderDto);
     }
 
     @Operation(description = "Delete a gender", tags = "gender")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Success"))
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable long id){
         return genderService.delete(id);
     }
 
     @Operation(description = "Edit a gender", tags = "gender")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Success"))
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable long id,@RequestBody GenderDto genderDtoList){
         return genderService.update(id,genderDtoList);
     }

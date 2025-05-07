@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@RequestMapping("/api/typeidentifier")
+@RequestMapping( "type-identifiers")
 @RestController
 public class TypeIdentifierController {
     private final TypeIdentifierServiceImpl identifierService;
@@ -20,37 +20,37 @@ public class TypeIdentifierController {
         this.identifierService=identifierService;
     }
 
-    @Operation(description = "List All typeidentifier", tags = "typeidentifier")
+    @Operation(description = "List All type identifier", tags = "type identifier")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Success"))
-    @GetMapping("/list")
+    @GetMapping
     public ResponseEntity<?> list(){
         return identifierService.list();
     }
 
-    @Operation(description = "Find a typeidentifier", tags = "typeidentifier")
+    @Operation(description = "Find a typeidentifier", tags = "type identifier")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Success"))
-    @GetMapping("/list/{id}")
+    @GetMapping("/{id}")
     public TipeIdentifierDto listbyid(@PathVariable long id){
         return identifierService.findone(id);
     }
 
-    @Operation(description = "Save typeidentifier", tags = "typeidentifier")
+    @Operation(description = "Save type identifier", tags = "type identifier")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Success"))
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody TipeidentifierSaveDTO saveDTO){
         return identifierService.save(saveDTO);
     }
 
-    @Operation(description = "Edit typeidentifier", tags = "typeidentifier")
+    @Operation(description = "Edit type identifier", tags = "type identifier")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Success"))
-    @PutMapping("/update/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<?> update(@PathVariable long id,@RequestBody TipeidentifierSaveDTO saveDTO){
         return identifierService.update(id,saveDTO);
     }
 
-    @Operation(description = "Delete typeidentifier", tags = "typeidentifier")
+    @Operation(description = "Delete type identifier", tags = "type identifier")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Success"))
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping
     public ResponseEntity<?> delete(@PathVariable long id){
       return identifierService.delete(id);
     }

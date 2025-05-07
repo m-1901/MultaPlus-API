@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -32,14 +33,13 @@ public class MotoristController {
     public Motorists getMotorist(@PathVariable String userIdentifier) {
         return motoristService.getMotorist(userIdentifier);
     }
-
+    @GetMapping
+    public List<Motorists> getMotorists( ) {
+        return  motoristService.getMotorist();
+    }
     @DeleteMapping("/{motoristIdentifier}")
     public void deleteMotorist(@PathVariable String motoristIdentifier) {
         motoristService.deleteMotorist(motoristIdentifier);
     }
-    @Operation(summary="verify if B.I motorists exists and retorn, motorists dates")
-    @GetMapping("/verify/{Bi}")
-    public Optional<Motorists> getBi(@PathVariable String Bi){
-        return motoristService.getBi(Bi);
-    }
+
 }

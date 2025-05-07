@@ -17,13 +17,10 @@ import lombok.Setter;
 public class Actions extends AbstractModel {
 
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Enter a Action")
+    @NotBlank(message = "Action Name Is required")
     private String action;
-
     private String description;
-
     @ManyToOne
     @JoinColumn(name = "state_id")
-    @JsonIgnoreProperties("actions")
     private Status state;
 }

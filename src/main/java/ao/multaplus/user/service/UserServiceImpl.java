@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService{
         role = roleService.findByRole("admin");
         if (authRepository.findByEmail(userDto.authentication().email()) == null) {
             Auth auth = Auth.builder().email( userDto.authentication().email()).password(passwordEncoder.encode(userDto.authentication().password())).role(role).telephone(userDto.telephone()).build();
-         //auth= authRepository.save(auth);
+         //auth= authRepository.saveAction(auth);
             Users user = new Users();
             user.setName(userDto.name());
             user.setDateBirth(userDto.dateBirth());

@@ -9,8 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/vehicle")
+@RequestMapping("/vehicles")
 @Tag(name = "Vehicle", description = "Vehicle endpoints")
 @RequiredArgsConstructor
 public class VehicleController {
@@ -34,8 +36,14 @@ public class VehicleController {
         vehicleService.removeVehicle(plate);
     }
     @GetMapping("{plate}")
+    @ResponseStatus(HttpStatus.OK)
     public Vehicles getVehicle(@PathVariable String plate) {
        return vehicleService.getVehicle(plate);
+    }
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Vehicles> getVehicle( ) {
+        return vehicleService.getVehicles( );
     }
 
     

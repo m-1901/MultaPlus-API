@@ -1,5 +1,6 @@
 package ao.multaplus.state.service;
 
+import ao.multaplus.exception.model.ResourceNotFound;
 import ao.multaplus.state.dtos.StateDto;
 import ao.multaplus.state.dtos.StateSaveDto;
 import ao.multaplus.state.entity.StatusMensagem;
@@ -107,8 +108,7 @@ public class StatusServiceImpl implements StatusService {
     @Override
     public Status getStatus(long id) {
         return   repository.findById(id).orElseThrow(()->{
-            throw new RuntimeException("status " +
-                    "not found");
+            throw new ResourceNotFound("status not found");
         });
     }
 }

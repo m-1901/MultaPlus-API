@@ -28,7 +28,7 @@ public class FineInfrigmentServiceImpl implements FineInfrigmentService {
 
     @Override
     public ResponseEntity<List<FineInfringements>> searchInfrigmentsByFine(Long id) {
-        List<FineInfringements> fineInfringements=fineInfringementRepository.findByFineId(id);
+        List<FineInfringements> fineInfringements= fineInfringementRepository.findByFineId(id);
         return ResponseEntity.ok(fineInfringements);
     }
     @Override

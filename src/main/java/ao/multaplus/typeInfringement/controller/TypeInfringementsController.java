@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/type-infrigiments")
-@Tag(name = "Type Infrigiments", description = "Manage types Infringements")
-public class TypeInfrigimentsController {
+@RequestMapping("/type-infringements")
+@Tag(name = "Type Infringements", description = "Manage types Infringements")
+public class TypeInfringementsController {
 
     private final TypeInfrigimentService service;
 
-    public TypeInfrigimentsController(TypeInfrigimentService service) {
+    public TypeInfringementsController(TypeInfrigimentService service) {
         this.service = service;
     }
 
-    @Operation(summary = "Create a type infringents", description = "add a new type infringements to the system")
+    @Operation(summary = "Create a type infringements", description = "add a new type infringements to the system")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "type infringements created successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid request")

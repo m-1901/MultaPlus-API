@@ -15,6 +15,5 @@ public class Status extends AbstractModel {
     @Column(nullable = false, unique = true)
     @NotBlank(message = "Enter a Status")
     private String state;
-
     private String description;
 }

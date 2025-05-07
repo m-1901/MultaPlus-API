@@ -83,7 +83,7 @@ public class PaymentServiceImpl implements PaymentService {
             payments.setFine(payment.fine());
             payments.setPrice(payment.price());
             paymentRepository.save(payments);
-            return new ResponseEntity<>("Payment save",HttpStatus.CREATED);
+            return new ResponseEntity<>("Payment saveAction",HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>(e.toString(),HttpStatus.BAD_REQUEST);
         }

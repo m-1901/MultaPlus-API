@@ -7,6 +7,6 @@ public record TypeInfringementsResponse(
         String type,
         String description,
         double price,
-        StateSenderDto state
+        StateSenderDto status
 ) {
 }

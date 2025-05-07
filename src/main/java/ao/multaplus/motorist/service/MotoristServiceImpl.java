@@ -38,6 +38,9 @@ public class MotoristServiceImpl implements MotoristService {
             throw new RuntimeException(e);
         }
     }
+    public List<Motorists> getMotorist(){
+        return motoristRepository.findAll();
+    }
 
     @Override
     public Motorists getMotorist(String motoristIdentifier) {
